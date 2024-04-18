@@ -15,14 +15,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_18_094354) do
   enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
-    t.text "url"
-    t.text "title"
+    t.text "url", null: false
+    t.text "title", null: false
     t.text "description"
     t.text "image_path"
     t.bigint "source_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["source_id"], name: "index_articles_on_source_id"
+    t.index ["url"], name: "index_articles_on_url", unique: true
   end
 
   create_table "sources", force: :cascade do |t|
