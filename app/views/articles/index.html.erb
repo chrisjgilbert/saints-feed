@@ -1,3 +1,8 @@
+  
+<header class="mb-12 text-xl">
+  <h1>Today’s Southampton FC news</h1>
+  <p><%= Date.today.strftime("%A, %d %B") %></p>
+</header>
 <ol class="flex flex-col divide-y divide-slate-200 w-full">
   <% @articles.each do |article| %>
     <li class="flex py-4 first:pt-0 last:pb-0 group relative">
