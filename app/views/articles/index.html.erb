@@ -1,0 +1,24 @@
+<ol class="flex flex-col divide-y divide-slate-200 w-full">
+  <% @articles.each do |article| %>
+    <li class="flex py-4 first:pt-0 last:pb-0 group relative">
+      <div class="flex flex-col flex-1 mr-8 gap-2">
+        <div class="flex items-center gap-2">
+          <%= image_tag "sources/#{article.source.name.parameterize(separator: "_")}.png",
+            alt: "",
+            class: "h-4 w-4" %>
+          <span class="text-xs text-slate-600">
+            <%= article.source.name %>
+          </span>
+        </div>
+        <div class="flex flex-col">
+          <h2 class="group-hover:underline text-lg font-medium">
+            <%= link_to article.title, article.url, class: "after:absolute after:inset-0", target: "_blank" %>
+          </h2>
+          <p><%= article.description %></p>
+        </div>
+        <p class="text-xs mt-auto text-slate-600"><%= time_ago_in_words(article.created_at) %> ago</p>
+      </div>
+      <%= image_tag article.image_path, class: "object-cover w-32 h-24 rounded-lg" %>
+    </li>
+  <% end %>
+</section>
