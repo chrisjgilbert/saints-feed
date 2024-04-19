@@ -7,8 +7,8 @@ class Source < ApplicationRecord
     "sources/#{name.parameterize(separator: "_")}.png"
   end
 
-  def get_articles
-    adapter.call
+  def pull_articles
+    scraper.call
   end
 
   def scraper
