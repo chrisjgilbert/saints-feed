@@ -5,6 +5,7 @@ class CreateArticles < ActiveRecord::Migration[7.0]
       t.text :title, null: false
       t.text :description
       t.text :image_path
+      t.datetime :published_at
       t.references :source, null: false, foreign_key: true
 
       t.timestamps

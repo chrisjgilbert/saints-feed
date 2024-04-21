@@ -22,16 +22,22 @@ module Scrapers
         end
 
         article = get_doc(url)
-        title = article.xpath('//meta[@property="og:title"]/@content').text
-        description = article.xpath('//meta[@property="og:description"]/@content').text
-        image_path = article.xpath("//meta[@property='og:image']/@content").text
+        article = JSON.parse(article.search("script[type='application/ld+json']").text)
+        title = article.fetch("headline")
+        description = article.fetch("description", "")
+        image_path = article.fetch("image").fetch("url")
+        published_at = DateTime.parse(article.fetch("datePublished"))
 
         source.articles.create!(
           url: url,
           title: title,
           description: description,
-          image_path: image_path
+          image_path: image_path,
+          published_at: published_at
         )
+      rescue JSON::ParserError => e
+        Rails.logger.error "Error parsing schema at #{url}: #{e.message}"
+        next
       rescue ActiveRecord::RecordInvalid => e
         Rails.logger.error "Error creating article: #{e.message}"
         @errors += 1
@@ -40,15 +46,15 @@ module Scrapers
         @created_articles += 1
 
         sleep 0.5
-      end
 
-      Rails.logger.info %(
-        *****************************************
-        Created #{@created_articles} articles.
-        Ignored #{@duplicate_articles} duplicates.
-        There were #{@errors} errors.
-        *****************************************
-      )
+        Rails.logger.info %(
+          *****************************************
+          Created #{@created_articles} articles.
+          Ignored #{@duplicate_articles} duplicates.
+          There were #{@errors} errors.
+          *****************************************
+        )
+      end
     end
 
     private
@@ -59,7 +65,7 @@ module Scrapers
         .map(&:value)
         .reject { |path| path.include?("#comments-anchor") } # Use xpath?
         .uniq
-        .map { |path| "#{BASE_URL}#{path}" }
+        .map { |path| CGI.unescape("#{BASE_URL}#{path}") }
     end
 
     def get_doc(url)

@@ -20,7 +20,7 @@
           </h2>
           <p><%= article.description %></p>
         </div>
-        <p class="text-xs mt-auto text-slate-600"><%= time_ago_in_words(article.created_at) %> ago</p>
+        <p class="text-xs mt-auto text-slate-600"><%= time_ago_in_words(article.published_at) %> ago</p>
       </div>
       <%= image_tag article.image_path, class: "object-cover w-32 h-24 rounded-lg" %>
     </li>

@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_18_094354) do
     t.text "title", null: false
     t.text "description"
     t.text "image_path"
+    t.datetime "published_at"
     t.bigint "source_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,9 +28,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_18_094354) do
   end
 
   create_table "sources", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sources_on_name", unique: true
   end
 
   add_foreign_key "articles", "sources"
