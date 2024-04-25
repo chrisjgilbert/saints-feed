@@ -3,20 +3,52 @@ require "open-uri"
 require "watir"
 
 module Scrapers
-  class SouthamptonFC
-    def self.call
-      new(Source.find_by(name: "Southampton FC")).call
-    end
-
-    BASE_URL = "https://www.southamptonfc.com"
-    LANDING_URL = "#{BASE_URL}/en/news/latest-news"
-    private attr_reader :source
-
-    def initialize(source)
-      @source = source
+  class Base
+    def initialize
       @created_articles = 0
       @duplicate_articles = 0
       @errors = 0
+    end
+
+    def source
+      @source ||= Source.find_by(name: source_name)
+    end
+
+    def set_source
+      raise NotImplementedError
+    end
+
+    def base_url
+      raise NotImplementedError
+    end
+
+    def index_path
+      raise NotImplementedError
+    end
+
+    def article_url_selector
+      raise NotImplementedError
+    end
+
+    def skip_article_url_patterns
+      []
+    end
+
+    def article_urls
+      urls = index_doc.search(article_url_selector).map do |link|
+        path = link["href"]
+
+        next if skip_article_urls_patterns.any? do |pattern|
+          link["href"].match?(pattern)
+        end
+
+        if path.start_with?(base_url)
+          path
+        else
+          base_url + path
+        end
+      end
+      urls.compact.uniq
     end
 
     def call
@@ -60,16 +92,12 @@ module Scrapers
     )
     end
 
-    def landing_page
-      get_doc(LANDING_URL)
+    def index_url
+      base_url + index_path
     end
 
-    def article_urls
-      browser = Watir::Browser.new(:chrome, headless: true)
-      browser.goto(LANDING_URL)
-      browser.element(css: ".news-list").wait_until(&:present?)
-      doc = Nokogiri::HTML(browser.html)
-      doc.search(".article-card__floating-link").map { |link| CGI.unescape("#{BASE_URL}#{link["href"]}") }
+    def index_doc
+      get_doc(index_url)
     end
 
     def get_doc(url)
