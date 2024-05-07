@@ -3,7 +3,6 @@ class Base
     new.run!
   end
 
-  attr_accessor :created_articles, :duplicate_articles, :errors
   def initialize
     @created_articles = 0
     @duplicate_articles = 0
@@ -31,7 +30,7 @@ class Base
 
     article_urls.each do |url|
       if source.articles.exists?(url: url)
-        duplicate_articles += 1
+        @duplicate_articles += 1
         next
       end
 
@@ -46,7 +45,7 @@ class Base
         sleep 0.5
       end
 
-      created_articles += 1
+      @created_articles += 1
     end
 
     Rails.logger.info(output_message)
@@ -61,9 +60,9 @@ class Base
   def output_message
     %(
       *****************************************
-      Created #{created_articles} articles.
-      Ignored #{duplicate_articles} duplicates.
-      There were #{errors} errors.
+      Created #{@created_articles} articles.
+      Ignored #{@duplicate_articles} duplicates.
+      There were #{@errors} errors.
       *****************************************
     )
   end
