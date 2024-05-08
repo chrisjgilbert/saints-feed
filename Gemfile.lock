@@ -114,11 +114,6 @@ GEM
     marcel (1.0.4)
     mini_mime (1.1.5)
     minitest (5.22.3)
-    mission_control-jobs (0.2.1)
-      importmap-rails
-      rails (~> 7.1)
-      stimulus-rails
-      turbo-rails
     msgpack (1.7.2)
     mutex_m (0.2.0)
     net-imap (0.4.10)
@@ -256,7 +251,6 @@ DEPENDENCIES
   byebug
   importmap-rails
   jbuilder
-  mission_control-jobs
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.1)
