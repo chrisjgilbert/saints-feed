@@ -2,13 +2,13 @@ databases:
   - name: saints_feed
     databaseName: saints_feed_production
     user: saints_feed
-    plan: free
+    plan: starter
 
 services:
   - type: web
     name: saints_feed
     runtime: ruby
-    plan: free
+    plan: starter
     buildCommand: "./bin/render-build.sh"
     # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
     startCommand: "bundle exec puma"
@@ -24,7 +24,7 @@ services:
   - type: worker
     name: scrapers
     runtime: ruby
-    plan: free
+    plan: starter
     buildCommand: bundle install
     startCommand: bundle exec rake solid_queue:start
     envVars:
