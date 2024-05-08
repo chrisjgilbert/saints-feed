@@ -32,3 +32,5 @@ services:
         fromDatabase:
           name: saints_feed
           property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
