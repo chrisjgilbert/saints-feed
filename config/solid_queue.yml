@@ -3,10 +3,10 @@ default: &default
     - polling_interval: 1
       batch_size: 500
       recurring_tasks:
-        my_periodic_job:
-          class: MyJob
-          args: [42, { status: "custom_status" }]
-          schedule: every second
+        pull_hampshire_live_articles:
+          class: PullArticlesJob
+          args: [HampshireLive]
+          schedule: every ten minutes
 #   workers:
 #     - queues: "*"
 #       threads: 5
