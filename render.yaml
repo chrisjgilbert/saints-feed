@@ -1,0 +1,23 @@
+databases:
+  - name: saints_feed
+    databaseName: saints_feed_production
+    user: saints_feed
+    plan: free
+
+services:
+  - type: web
+    name: saints_feed
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
+    startCommand: "bundle exec puma"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saints_fed
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2 # sensible default
