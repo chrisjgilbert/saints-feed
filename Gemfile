@@ -53,7 +53,6 @@ gem "bootsnap", require: false
 
 gem 'selenium-webdriver', '~> 4.4'
 gem "solid_queue"
-gem "mission_control-jobs"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
