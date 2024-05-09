@@ -26,6 +26,8 @@ class Base
   end
 
   def run!
+    Rails.logger.info "Running #{source_name} scraper..."
+
     article_urls = driver.find_valid_urls(index_url, valid_paths)
 
     article_urls.each do |url|
