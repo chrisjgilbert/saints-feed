@@ -265,7 +265,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.1)
   redis (~> 4.0)
-  selenium-webdriver (~> 4.4)
+  selenium-webdriver (~> 4.20)
   solid_queue (= 0.3.0)
   sprockets-rails
   stimulus-rails
