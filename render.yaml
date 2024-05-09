@@ -9,7 +9,7 @@ services:
     name: saints_feed
     runtime: ruby
     plan: starter
-    buildCommand: "./bin/render-build.sh"
+    buildCommand: "./bin/render-web-build.sh"
     preDeployCommand: "bundle exec rails db:migrate"
     startCommand: "bundle exec puma"
     envVars:
@@ -25,7 +25,7 @@ services:
     name: scrapers
     runtime: ruby
     plan: starter
-    buildCommand: bundle install
+    buildCommand: "./bin/render-worker-build.sh"
     startCommand: bundle exec rake solid_queue:start
     envVars:
       - key: DATABASE_URL
