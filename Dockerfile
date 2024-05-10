@@ -13,6 +13,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_PATH="/usr/local/bundle"
 
+ENV CHROMEDRIVER_VERSION=120.0.6099.71
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -35,9 +36,17 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libvips \
     pkg-config
 
+
 # Install chrome
-RUN apt-get update && apt-get install -y wget gnupg && apt-get clean
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \ && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN apt-get update && apt-get install -y wget && apt-get install -y zip
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
+
+# Install chromedriver
+RUN wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
+  && unzip chromedriver-linux64.zip && rm -dfr chromedriver_linux64.zip \
+  && mv /chromedriver-linux64/chromedriver /usr/bin/chromedriver \
+  && chmod +x /usr/bin/chromedriver
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
