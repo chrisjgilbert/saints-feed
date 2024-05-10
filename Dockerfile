@@ -34,7 +34,10 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libpq-dev \
     libvips \
     pkg-config \
-    chromium-driver
+
+# Install chrome
+RUN apt-get update && apt-get install -y wget gnupg && apt-get clean
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \ && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
