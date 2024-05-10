@@ -35,7 +35,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libpq-dev \
     libvips \
     pkg-config \
-    firefox
+    firefox-esr
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
