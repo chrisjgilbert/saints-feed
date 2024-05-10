@@ -13,8 +13,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_PATH="/usr/local/bundle"
 
-ENV CHROMEDRIVER_VERSION=120.0.6099.71
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -35,7 +33,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libpq-dev \
     libvips \
     pkg-config \
-    firefox-esr
+    firefox-geckodriver
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
