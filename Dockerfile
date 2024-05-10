@@ -33,7 +33,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     git \
     libpq-dev \
     libvips \
-    pkg-config \
+    pkg-config
 
 # Install chrome
 RUN apt-get update && apt-get install -y wget gnupg && apt-get clean
