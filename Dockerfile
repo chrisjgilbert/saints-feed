@@ -34,13 +34,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     git \
     libpq-dev \
     libvips \
-    pkg-config
-
-
-# Install chrome
-RUN apt-get update && apt-get install -y wget && apt-get install -y zip
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
+    pkg-config \
+    firefox
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
