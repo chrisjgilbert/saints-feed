@@ -24,7 +24,6 @@ services:
     name: scrapers
     runtime: docker
     dockerfilePath: ./Dockerfile
-    dockerCommand: "bundle exec rake solid_queue:start"
     plan: starter
     envVars:
       - key: DATABASE_URL
