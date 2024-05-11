@@ -8,7 +8,7 @@ services:
   - type: web
     name: saints_feed
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: "./Dockerfile"
     plan: starter
     preDeployCommand: "bundle exec rails db:migrate"
     envVars:
@@ -23,7 +23,7 @@ services:
   - type: worker
     name: scrapers
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: "./Dockerfile"
     plan: starter
     envVars:
       - key: DATABASE_URL
