@@ -6,7 +6,6 @@ class Driver
     options.add_argument("--headless")
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage")
-
   end
 
   def find_valid_urls(url, valid_paths = [])
