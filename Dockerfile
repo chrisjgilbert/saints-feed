@@ -32,7 +32,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     git \
     libpq-dev \
     libvips \
-    pkg-config
+    pkg-config \
+    chromium-browser
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./

@@ -2,9 +2,11 @@ class Driver
   private attr_reader :driver
 
   def initialize
-    options = Selenium::WebDriver::Firefox::Options.new
+    options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--headless")
-    @driver = Selenium::WebDriver.for(:firefox, options: options)
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage")
+ox, options: options)
   end
 
   def find_valid_urls(url, valid_paths = [])
